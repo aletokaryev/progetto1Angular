@@ -1,27 +1,109 @@
-# Progetto1Angular
+<a name="readme-top"></a>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<h2 align="center">UrbanConnect</h2>
 
-## Build
+  <p align="center">
+    Company that aims to improve the lives of people in urban centers.
+    <br />
+    <a href="https://fascinating-quokka-8f8ad1.netlify.app/">View Demo</a>
+  </p>
+</div>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<img src="https://i.imgur.com/U955Li8.png">
+<br></br>
+An Angular web app that shows a list of users taken from the GoRest API. Here you can manipulate and delete users and user posts, get a list of all posts and show comments. You can also add new users, posts and comments!
+
+The app was developed following the Angular Best pratices and the design is done with Angular Material. 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+### Built With
+
+* [![Angular][Angular.io]][Angular-url]
+* External Libraries: <a href="https://material.angular.io">Angular Material</a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+This is how you can setup your project locally.
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/aletokaryev/progetto1Angular.git
+   ```
+2. Install NPM packages and NPM modules
+   ```sh
+   npm install
+   ```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+
+_For more examples, please refer to the [Documentation](https://example.com)_
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- CONTACT -->
+## Contact
+
+Alessandro B. Tokaryev - [![Angular][linkedin-shield]][linkedin-url] - alebtokaryev@gmail.com
+
+Project Link: [https://github.com/aletokaryev/progetto1Angular]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/aletokaryev/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
