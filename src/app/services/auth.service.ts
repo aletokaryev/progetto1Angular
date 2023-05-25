@@ -24,6 +24,6 @@ export class AuthService {
 
   logout() {
     sessionStorage.clear();
-    window.location.href = 'auth';
+    window.location.href = '/logout';
   }
 }

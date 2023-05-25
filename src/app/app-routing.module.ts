@@ -8,6 +8,7 @@ import { PostsComponent } from './components/posts/posts.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' }, // Pagina di accesso predefinita
+  { path: 'logout', redirectTo: 'auth', pathMatch: 'full' },
   { path: 'auth', component: LoginComponent}, // Pagina di autenticazione
   { path: 'users', component: UserListComponent, canActivate: [AuthGuard] }, // Lista degli utenti (protetta da autenticazione)
   { path: 'users/:id', component: UserDetailsComponent, canActivate: [AuthGuard] }, // Dettagli dell'utente (protetti da autenticazione)
