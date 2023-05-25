@@ -76,7 +76,7 @@ This is how you can setup your project locally.
    ```sh
    npm install
    ```
-2. Run a dev server to test the app
+3. Run a dev server to test the app
    ```sh
    ng serve
    ```
