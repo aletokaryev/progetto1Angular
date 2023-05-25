@@ -1,0 +1,46 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+.mainContainer{
+  margin: 10px;
+
+  .userInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .userId{
+    margin-left: 15px;
+    font-size: 1rem;
+  }
+  h1{
+    margin: 10px;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+
+.posts{
+  margin-left: 15px;
+
+  .mainTitle{
+    color: #16a2ff;
+    margin-top: 20px;
+  }
+  h3{
+    font-size: 1rem;
+    color: #258ace;
+  }
+  .comments{
+    margin-left: 15px;
+    .mat-mdc-button.mat-customPrimary{
+      color: #16a2ff;
+    }
+    h2{
+      margin: 0;
+      font-size: 1.1rem;
+    }
+  }
+}
+

@@ -1,0 +1,39 @@
+<app-nav></app-nav>
+
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<!--Start of mainContainer div-->
+<div class="mainContainer">
+  <h1>{{ users.name }}</h1>
+
+  <div class="userInfo">
+    <span class="userId">ID: {{ users.id }}</span>
+    <span class="gender">Gender: {{ users.gender }}</span>
+    <span class="status">Status: {{ users.status }}</span>
+  </div>
+
+  <!--Start of posts div-->
+  <div class="posts">
+    <h2 class="mainTitle">USER POSTS</h2>
+
+    <div *ngFor="let post of posts">
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.body }}</p>
+      <button color="customPrimary" mat-button (click)="openAddCommentDialog(post.id)">Add Comment</button>
+      <div class="comments">
+        <h2>COMMENTS ({{ comments.length }})</h2>
+
+        <div *ngFor="let comment of comments">
+          <div class="byUser">
+            <h2>{{ comment.name }}</h2>
+            <p>{{ comment.email }}</p>
+          </div>
+
+          <p>{{ comment.body }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End of posts div-->
+</div>
+<!--End of mainContainer div-->

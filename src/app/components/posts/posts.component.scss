@@ -1,0 +1,89 @@
+.btnContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  button{
+    font-size: 1.1rem;
+    color: white;
+  }
+}
+mat-spinner{
+  margin: auto;
+  margin-top: 100px;
+}
+
+.cardContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.example-card {
+  flex-basis: calc(25% - 50px);
+  height: 450px;
+  max-width: 300px;
+  color: black;
+  margin: 20px;
+}
+
+mat-card-actions{
+  position: absolute;
+  bottom: 5px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+@media (max-width: 1200px) {
+  .example-card {
+    flex-basis: calc(33.33% - 50px);
+  }
+  .btnContainer{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    button{
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.topToolbar{
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.mat-mdc-raised-button.mat-customPrimary{
+  background-color: #16a2ff;
+}
+
+@media (max-width: 992px) {
+  .example-card {
+    flex-basis: calc(50% - 50px);
+  }
+  .btnContainer{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    button{
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .example-card {
+    flex-basis: 100%;
+  }
+  .btnContainer{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    button{
+      font-size: 0.8rem;
+    }
+  }
+}

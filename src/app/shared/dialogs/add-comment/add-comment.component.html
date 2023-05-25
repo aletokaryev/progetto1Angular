@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Add Comment</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" #newCommentForm="ngForm">
+    <!-- Campo User Name -->
+    <div>
+      <label for="user">User Name</label>
+      <input type="text" id="user" name="user" [(ngModel)]="newComment.name" required>
+    </div>
+    <!-- Campo User Email -->
+    <div>
+      <label for="user_email">User Email</label>
+      <input type="email" id="user_email" name="user_email" [(ngModel)]="newComment.email" required>
+    </div>
+    <!-- Campo Comment -->
+    <div>
+      <label for="body">Comment</label><br>
+      <textarea id="body" name="body" rows="20" cols="30" [(ngModel)]="newComment.body" required></textarea>
+    </div>
+
+    <!-- Visualizzazione del messaggio di errore -->
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
+    <!-- Pulsanti di invio e annullamento -->
+    <div class="btns">
+      <button mat-button type="submit" [disabled]="!newCommentForm.valid" color="primary">Add Comment</button>
+      <button mat-button (click)="onNoClick()" color="primary">Cancel</button>
+    </div>
+  </form>
+</mat-dialog-content>

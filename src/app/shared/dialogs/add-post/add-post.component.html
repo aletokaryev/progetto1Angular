@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Add Post</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" #newPostForm="ngForm">
+    <!-- Campo User ID -->
+    <div>
+      <label for="user">User ID</label>
+      <input type="number" id="user" name="user" [(ngModel)]="newPost.user" required>
+    </div>
+    <!-- Campo Title -->
+    <div>
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" [(ngModel)]="newPost.title" required>
+    </div>
+    <!-- Campo Post body -->
+    <div>
+      <label for="body">Post body</label><br>
+      <textarea id="body" name="body" rows="20" cols="30" [(ngModel)]="newPost.body" required></textarea>
+    </div>
+
+    <!-- Visualizzazione del messaggio di errore -->
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
+    <!-- Pulsanti di invio e annullamento -->
+    <div class="btns">
+      <button mat-button type="submit" [disabled]="!newPostForm.valid" color="primary">Add Post</button>
+      <button mat-button (click)="onNoClick()" color="primary">Cancel</button>
+    </div>
+  </form>
+</mat-dialog-content>

@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Comments ({{comments.length}})</h2>
+<mat-dialog-content>
+  <div class="comments" *ngFor="let item of comments">
+    <h2>{{ item.name }}</h2>
+    <p>{{ item.email }}</p>
+    <hr>
+    <p>{{ item.body }}</p>
+  </div>
+  <button mat-button color="primary" (click)="openAddCommentDialog()">Add Comment</button>
+</mat-dialog-content>

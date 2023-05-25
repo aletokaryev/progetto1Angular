@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Add User</h2>
+<mat-dialog-content>
+  <form (ngSubmit)="onSubmit()" #newUserForm="ngForm">
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" [(ngModel)]="newUser.email" required>
+    </div>
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" [(ngModel)]="newUser.name" required>
+    </div>
+    <div>
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" [(ngModel)]="newUser.gender" required>
+        <option value="">Select user gender</option>
+        <option value="male">male</option>
+        <option value="female">female</option>
+      </select>
+    </div>
+    <div>
+      <label for="status">Status:</label>
+      <select id="status" name="status" [(ngModel)]="newUser.status" required>
+        <option value="">Select user status</option>
+        <option value="active">active</option>
+        <option value="inactive">inactive</option>
+      </select>
+    </div>
+
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+
+    <div class="btns">
+      <button mat-button type="submit" [disabled]="!newUserForm.valid" color="primary">Add user</button>
+      <button mat-button (click)="onNoClick()" color="primary">Cancel</button>
+    </div>
+  </form>
+
+</mat-dialog-content>

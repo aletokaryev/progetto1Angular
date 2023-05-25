@@ -1,0 +1,77 @@
+<app-nav></app-nav> <!-- Componente di navigazione -->
+
+<h1 class="pageHeader">Users</h1> <!-- Intestazione della pagina -->
+
+<mat-spinner *ngIf="loading"></mat-spinner> <!-- Spinner di caricamento mostrato quando loading è true -->
+<div class="tableContainer">
+  <div class="topToolbar">
+    <mat-form-field class="form">
+      <mat-label class="label">Search for a user...</mat-label>
+      <input matInput [(ngModel)]="term" class="input">
+    </mat-form-field>
+    <button mat-raised-button matTooltip="Add New User" color="customPrimary" (click)="addUser()"> <!---->
+      <mat-icon>add</mat-icon>
+      New User
+    </button>
+  </div>
+
+  <div class="tableWrapper">
+    <table mat-table [dataSource]="users | filter: term" class="mat-table">
+      <!-- Definizioni delle colonne della tabella -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let user"> {{ user.id }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let user"> {{ user.name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let user" [ngStyle]="{'color': user.status == 'active' ? 'green' : 'OrangeRed'}"> {{ user.status }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef> Gender </th>
+        <td mat-cell *matCellDef="let user" [ngStyle]="{'color': user.gender == 'female' ? 'DeepPink' : 'DeepSkyBlue'}"> {{ user.gender }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let user">
+          <button mat-icon-button color="customAccent" matTooltip="Edit" routerLink="/users/{{user.id}}">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteUserByID(user.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> <!-- Riga dell'intestazione della tabella -->
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> <!-- Riga di dati della tabella -->
+    </table>
+  </div>
+
+  <div class="btnContainer">
+    <div>
+      <button mat-button (click)="changePage(currentPage - 1)" [disabled]="currentPage <= 1">Previous Page</button>
+    </div>
+    <div class="col1">
+      <button mat-button (click)="loadMore(10)">Show 10</button>
+      <button mat-button (click)="loadMore(25)">Show 25</button>
+      <button mat-button (click)="loadMore(50)">Show 50</button>
+      <button mat-button (click)="loadMore(100)">Show 100</button>
+    </div>
+    <div>
+      <button mat-button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= 299">Next Page</button>
+    </div>
+  </div>
+</div>

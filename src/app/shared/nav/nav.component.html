@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <span>UrbanConnect</span>
+  <span class="example-spacer"></span>
+  <button mat-button matTooltip="Show users list" routerLink="/users" routerLinkActive="active">Home</button>
+  <button mat-button matTooltip="Show all users posts" routerLink="/posts" routerLinkActive="active">Posts</button>
+  <button mat-icon-button color="warn" matTooltip="Logout" (click)="auth.logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

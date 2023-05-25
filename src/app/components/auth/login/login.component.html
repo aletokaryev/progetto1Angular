@@ -1,0 +1,16 @@
+<h1>UrbanConnect</h1>
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
+  <label>
+    Token:
+    <input type="text" [(ngModel)]="token" name="token" required #tokenInput="ngModel">
+    <div *ngIf="tokenInput.invalid && (tokenInput.dirty || tokenInput.touched)" class="error-message">
+      Token is required.
+    </div>
+  </label>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  <br>
+  <button class="getToken"><a href="https://gorest.co.in/consumer/login" target="_blank" rel="noopener noreferrer">Get Token</a></button>
+</form>

@@ -1,0 +1,49 @@
+<app-nav></app-nav>
+
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<div class="topToolbar">
+  <mat-form-field class="form">
+    <mat-label class="label">Search for a post...</mat-label>
+    <input matInput [(ngModel)]="term" class="input">
+  </mat-form-field>
+  <button mat-raised-button matTooltip="Add New Post" color="customPrimary" (click)="addPost()">
+    <mat-icon>add</mat-icon>
+    New Post
+  </button>
+</div>
+<div class="cardContainer">
+  <mat-card *ngFor="let item of posts | filter: term" class="example-card">
+
+    <mat-card-header>
+      <mat-card-title>{{item.title}}</mat-card-title>
+      <mat-card-subtitle *ngIf="item.userDetails">{{item.userDetails.name}} <br> {{ item.userDetails.email }}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="!item.userDetails">{{item.user_id}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{item.body}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button matTooltip="Show comments" (click)="showComments(item.id)">Show comments</button>
+      <button mat-icon-button color="warn" matTooltip="Delete" (click)="deletePost(item.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+</div>
+
+<div class="btnContainer">
+  <div id="prev">
+    <button mat-button (click)="changePage(currentPage - 1)" [disabled]="currentPage <= 1">Previous Page</button>
+  </div>
+  <div class="col1">
+    <button mat-button (click)="loadMore(10)">Show 10</button>
+    <button mat-button (click)="loadMore(25)">Show 25</button>
+    <button mat-button (click)="loadMore(50)">Show 50</button>
+    <button mat-button (click)="loadMore(100)">Show 100</button>
+  </div>
+  <div id="next">
+    <button mat-button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= 299">Next Page</button>
+  </div>
+</div>
