@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,8 @@ export class AuthService {
 
   constructor() { }
 
-
-  setToken(token: string){
-    sessionStorage.setItem(this.tokenKey, token);
+  setToken(token: string) {
+    sessionStorage.setItem(this.tokenKey, token || environment.tokenKey); // Utilizza il valore del token dall'environment se non viene fornito un token esplicito
   }
 
   getToken() {

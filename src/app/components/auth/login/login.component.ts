@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/app/environment/environment';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,9 @@ export class LoginComponent {
   token: string = '';
   errorMessage: string = "";
 
-  constructor(private http: HttpClient, private router: Router, private auth: AuthService) {}
+  constructor(private http: HttpClient, private router: Router, private auth: AuthService) {
+    environment.tokenKey = this.token;
+  }
 
   onSubmit(): void {
     // Invocazione di una richiesta HTTP GET all'API con il token fornito
