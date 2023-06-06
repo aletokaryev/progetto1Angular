@@ -2,7 +2,6 @@ import { UserService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
-//import { AddUserDialogComponent } from 'src/app/core/components/add-user-dialog/add-user-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user.model';
 import { AddUserDialogComponent } from 'src/app/shared/dialogs/add-user/add-user.component';
@@ -75,10 +74,17 @@ export class UserListComponent implements OnInit {
    * @param id - ID dell'utente da eliminare.
    */
   deleteUserByID(id: any) {
-    this.http.deleteUser(id, this.token).subscribe(() => {
-      location.reload();
+    const token = this.auth.getToken();
+    if (!token) {
+      return; // handle token retrieval error
+    }
+
+    this.http.deleteUser(id, token).subscribe(() => {
+      const event = new CustomEvent('userDeleted');
+      document.dispatchEvent(event);
     });
   }
+
 
   /**
    * Apre il dialogo per aggiungere un nuovo utente utilizzando il componente AddUserDialogComponent.

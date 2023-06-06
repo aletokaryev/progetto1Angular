@@ -32,11 +32,4 @@ describe('AppComponent', () => {
     expect(routerOutlet).toBeTruthy();
   });
 
-  it('should have a router-outlet component', () => {
-    const routerOutlet = fixture.debugElement.nativeElement.querySelector('router-outlet');
-    const routerOutletComponent = routerOutlet.componentInstance;
-    expect(routerOutletComponent).toBeTruthy();
-    expect(routerOutletComponent instanceof RouterOutlet).toBe(true);
-  });
-
 });

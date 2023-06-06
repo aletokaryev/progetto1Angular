@@ -51,20 +51,19 @@ export class UserDetailsComponent implements OnInit {
     this.loading = true;
     const id = this.route.snapshot.paramMap.get('id');
 
-    // Effettua la chiamata API per ottenere i post dell'utente
     this.userService.getUserPost(id, this.token).subscribe((data: any) => {
       let i = 0;
       this.posts = data;
 
-      // Per ogni post, ottiene i commenti associati
       while (i < this.posts.length) {
-        this.getPostComments(this.posts[i].id);
+        this.getPostComments(String(this.posts[i].id)); // Convert postId to string
         i++;
       }
 
       this.loading = false;
     });
   }
+
 
   // Ottiene i commenti di un post
   getPostComments(postId: string) {

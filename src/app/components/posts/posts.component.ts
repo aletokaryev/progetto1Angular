@@ -86,7 +86,7 @@ export class PostsComponent implements OnInit {
   // Metodo per eliminare un post
   deletePost(id: any) {
     this.postService.deletePost(id, this.token).subscribe(() => {
-      location.reload();
+      this.posts = this.posts.filter(post => post.id !== id);
     });
   }
 }

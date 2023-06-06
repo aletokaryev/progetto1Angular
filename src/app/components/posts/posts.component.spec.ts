@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { PostsComponent } from './posts.component';
 import { PostService } from 'src/app/services/post.service';
@@ -7,6 +7,8 @@ import { UserService } from 'src/app/services/user.service';
 import { of } from 'rxjs';
 import { AddPostDialogComponent } from 'src/app/shared/dialogs/add-post/add-post.component';
 import { ShowCommentsDialogComponent } from 'src/app/shared/dialogs/show-comments/show-comments.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 import { NavComponent } from 'src/app/shared/nav/nav.component';
@@ -43,7 +45,7 @@ describe('PostsComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [PostsComponent, NavComponent, CustomSearchPipe],
-      imports: [MaterialUiModule, HttpClientModule, FormsModule],
+      imports: [MaterialUiModule, HttpClientModule, FormsModule, BrowserAnimationsModule],
       providers: [
         HttpClient,
         { provide: PostService, useValue: postServiceMock },
@@ -60,10 +62,23 @@ describe('PostsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should fetch posts on initialization', () => {
-    expect(component.posts).toEqual([{ id: 1, title: 'Post 1' }, { id: 2, title: 'Post 2' }]);
+  it('should fetch posts on initialization', fakeAsync(() => {
+    // Arrange
+    const userData = { id: 1, name: 'John Doe' };
+    userServiceMock.getUserById.and.returnValue(of(userData));
+
+    // Act
+    fixture.detectChanges(); // Trigger ngOnInit
+    tick(); // Wait for asynchronous calls to complete
+    fixture.detectChanges(); // Update the view
+
+    // Assert
+    expect(component.posts).toEqual([
+      { id: 1, title: 'Post 1', userDetails: userData },
+      { id: 2, title: 'Post 2', userDetails: userData }
+    ]);
     expect(postServiceMock.getPosts).toHaveBeenCalledWith(10, 1, 'token');
-  });
+  }));
 
   it('should load more posts', () => {
     component.loadMore(20);

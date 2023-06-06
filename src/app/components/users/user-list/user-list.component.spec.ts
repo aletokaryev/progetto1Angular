@@ -1,93 +1,97 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
-import { UserListComponent } from './user-list.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user.model';
+import { AddUserDialogComponent } from 'src/app/shared/dialogs/add-user/add-user.component';
+import { of, throwError } from 'rxjs';
+import { UserListComponent } from './user-list.component';
 
-import { NavComponent } from 'src/app/shared/nav/nav.component';
-import { MaterialUiModule } from 'src/app/material/material.module';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
 
-import { ActivatedRoute } from '@angular/router';
-
-import { CustomSearchPipe } from 'src/app/shared/pipes/custom-search-pipe.pipe';
-
-describe('UserListComponent', () => {
+describe("UserListComponent", () => {
   let component: UserListComponent;
-  let fixture: ComponentFixture<UserListComponent>;
-  let userService: UserService;
-  let authService: AuthService;
-  let dialog: MatDialog;
-
-  const users: User[] = [
-    { id: 1, name: 'John', email: 'john@example.com', status: 'active', gender: 'male' },
-    { id: 2, name: 'Jane', email: 'jane@example.com', status: 'inactive', gender: 'female' },
-  ];
-
-  const activatedRouteMock = {
-    snapshot: {
-      paramMap: {
-        get: () => '1'
-      }
-    }
-  };
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [UserListComponent, NavComponent, CustomSearchPipe],
-      imports: [MaterialUiModule, FormsModule, BrowserAnimationsModule, RouterModule,],
-      providers: [
-        { provide: UserService, useValue: jasmine.createSpyObj('UserService', ['getUsers', 'deleteUser']) },
-        { provide: AuthService, useValue: jasmine.createSpyObj('AuthService', ['getToken']) },
-        { provide: MatDialog, useValue: jasmine.createSpyObj('MatDialog', ['open']) },
-        { provide: ActivatedRoute, useValue: activatedRouteMock },
-      ],
-    }).compileComponents();
-  });
+  let userService: jasmine.SpyObj<UserService>;
+  let dialog: jasmine.SpyObj<MatDialog>;
+  let authService: jasmine.SpyObj<AuthService>;
+  let mockLocation: any;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserListComponent);
-    component = fixture.componentInstance;
-    userService = TestBed.inject(UserService);
-    authService = TestBed.inject(AuthService);
-    dialog = TestBed.inject(MatDialog);
+    userService = jasmine.createSpyObj('UserService', ['getUsers', 'deleteUser']);
+    dialog = jasmine.createSpyObj('MatDialog', ['open']);
+    authService = jasmine.createSpyObj('AuthService', ['getToken']);
 
-    (userService.getUsers as jasmine.Spy).and.returnValue(of(users));
-    (authService.getToken as jasmine.Spy).and.returnValue('test-token');
-
-    fixture.detectChanges();
+    component = new UserListComponent(userService, dialog, authService);
   });
 
-  it('should fetch and display users on initialization', () => {
-    expect(userService.getUsers).toHaveBeenCalledWith(component.pageSize, component.currentPage, 'test-token');
-    expect(component.users).toEqual(users);
-    expect(component.loading).toBeFalse();
+  describe("ngOnInit", () => {
+    it("should call showUsers method and add event listener for 'userDeleted'", () => {
+      spyOn(component, 'showUsers');
+      spyOn(document, 'addEventListener');
+
+      component.ngOnInit();
+
+      expect(component.showUsers).toHaveBeenCalled();
+      expect(document.addEventListener).toHaveBeenCalledWith('userDeleted', jasmine.any(Function));
+    });
   });
 
-  it('should load more users', () => {
-    const num = 20;
-    component.loadMore(num);
-    expect(component.loading).toBeTrue();
-    expect(component.pageSize).toEqual(num);
-    expect(userService.getUsers).toHaveBeenCalledWith(num, component.currentPage, 'test-token');
+  describe("loadMore", () => {
+    it("should set loading to true, update the pageSize, and call showUsers method", () => {
+      const num = 20;
+
+      spyOn(component, 'showUsers');
+
+      component.loadMore(num);
+
+      expect(component.loading).toBe(true);
+      expect(component.pageSize).toBe(num);
+      expect(component.showUsers).toHaveBeenCalled();
+    });
   });
 
-  it('should change page and fetch users', () => {
-    const pageNumber = 2;
-    component.changePage(pageNumber);
-    expect(component.loading).toBeTrue();
-    expect(component.currentPage).toEqual(pageNumber);
-    expect(userService.getUsers).toHaveBeenCalledWith(component.pageSize, pageNumber, 'test-token');
+  describe("changePage", () => {
+    it("should set loading to true, update the currentPage, and call showUsers method", () => {
+      const pageNumber = 2;
+
+      spyOn(component, 'showUsers');
+
+      component.changePage(pageNumber);
+
+      expect(component.loading).toBe(true);
+      expect(component.currentPage).toBe(pageNumber);
+      expect(component.showUsers).toHaveBeenCalled();
+    });
   });
 
-  it('should delete a user and reload the page', () => {
-    const userID = 1;
-    component.deleteUserByID(userID);
-    expect(userService.deleteUser).toHaveBeenCalledWith(userID, 'test-token');
+  describe("deleteUserByID", () => {
+    it("should delete a specific user from the API and emit 'userDeleted' event", () => {
+      const id = 1;
+      const mockToken = 'mockToken';
+
+      userService.deleteUser.and.returnValue(of({ success: true }));
+      authService.getToken.and.returnValue(mockToken);
+
+      const userDeletedListener = jasmine.createSpy('userDeletedListener');
+      document.addEventListener('userDeleted', userDeletedListener);
+
+      component.deleteUserByID(id);
+
+      expect(userService.deleteUser).toHaveBeenCalledWith(id, mockToken);
+      expect(userDeletedListener).toHaveBeenCalled();
+    });
   });
 
+  describe("addUser", () => {
+    it("should open the add user dialog", () => {
+      const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
+      dialogRefSpy.afterClosed.and.returnValue(of(null));
+
+      const dialogOpenSpy = dialog.open.and.returnValue(dialogRefSpy);
+
+      component.addUser();
+
+      expect(dialog.open).toHaveBeenCalledWith(AddUserDialogComponent, {
+        width: '350px',
+      });
+    });
+  });
 });

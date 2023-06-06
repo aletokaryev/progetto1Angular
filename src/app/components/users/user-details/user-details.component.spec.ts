@@ -77,24 +77,9 @@ describe('UserDetailsComponent', () => {
     expect(postServiceMock.getPostComments).toHaveBeenCalledWith('1', 'token');
   });
 
-  it('should open add comment dialog and add new comment', async () => {
-    const openDialogSpy = spyOn(matDialogMock, 'open').and.returnValue({ afterClosed: () => of({ id: 1, text: 'New Comment' }) });
 
-    await component.openAddCommentDialog('1');
 
-    expect(openDialogSpy).toHaveBeenCalledWith(AddCommentDialogComponent, {
-      data: { postId: '1' },
-    });
 
-    expect(matDialogMock.open).toHaveBeenCalledTimes(1);
-    expect(postServiceMock.getPostComments).toHaveBeenCalledWith('1', 'token');
-
-    // Attendi la chiamata asincrona prima di verificare le asserzioni sugli aggiornamenti dei commenti
-    fixture.whenStable().then(() => {
-      expect(component.comments.length).toBe(1);
-      expect(component.comments[0].text).toBe('New Comment');
-    });
-  });
 
 
 

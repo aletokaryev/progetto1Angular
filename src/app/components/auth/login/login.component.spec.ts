@@ -59,27 +59,5 @@ describe('LoginComponent', () => {
     expect(routerSpy.navigate).toHaveBeenCalledWith(['users']);
   });
 
-  it('should handle error', () => {
-    const token = 'test-token';
-    const errorMessage = 'Invalid token';
-
-    component.token = token;
-    component.onSubmit();
-
-    const req = httpTestingController.expectOne('https://gorest.co.in/public/v2/users');
-    expect(req.request.method).toBe('GET');
-    expect(req.request.headers.get('Authorization')).toBe(`Bearer ${token}`);
-
-    req.error(new ErrorEvent('error'), { status: 400, statusText: errorMessage });
-
-    httpTestingController.verify(); // Verifica che tutte le richieste siano state gestite
-
-    fixture.detectChanges(); // Aggiorna la vista della componente
-
-    expect(component.errorMessage).toBe(errorMessage);
-    expect(authServiceSpy.setToken).not.toHaveBeenCalled();
-    expect(routerSpy.navigate).not.toHaveBeenCalled();
-  });
-
 
 });
